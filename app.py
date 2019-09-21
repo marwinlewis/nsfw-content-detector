@@ -5,6 +5,7 @@ import json
 import os
 
 from nsfw import classify_nsfw
+from reddit import getImages
 
 app = Flask(__name__)
 app.config.from_object("config.DevelopmentConfig")
@@ -17,7 +18,7 @@ def index():
 
 @app.route('/api/nsfw', methods = ['POST'])
 @cross_origin()
-def upload():
+def nsfw():
     output = []
     if "images" in request.files:
         for image in request.files.getlist('images'):
@@ -28,11 +29,16 @@ def upload():
 
             output.append(classify_nsfw(IMAGE_PATH))
 
-            #os.remove(IMAGE_PATH)
+            os.remove(IMAGE_PATH)
 
         return json.dumps([{'status':'success'},{"output": output}])
     else:
         return json.dumps({'status':'error'})
+
+@app.route('/api/reddit', methods = ['POST'])
+@cross_origin()
+def reddit():
+    return json.dumps(getImages('earthporn'))
 
 if __name__ == '__main__':
     app.run(debug=True,host='0.0.0.0')
