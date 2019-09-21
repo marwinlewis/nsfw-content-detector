@@ -66,7 +66,7 @@ def classify_nsfw(IMAGE_PATH):
         print("Results for '{}'".format(IMAGE_PATH))
         print("\tSFW score:\t{}\n\tNSFW score:\t{}".format(*predictions[0]))
 
-        return json.dumps({
-                            'sfw': str(predictions[0][0]),
-                            'nsfw': str(predictions[0][1])
-                        })
+        return ({
+            'sfw': str(predictions[0][0]),
+            'nsfw': str(predictions[0][1])
+        })

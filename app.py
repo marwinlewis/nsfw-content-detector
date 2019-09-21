@@ -35,10 +35,10 @@ def nsfw():
     else:
         return json.dumps({'status':'error'})
 
-@app.route('/api/reddit', methods = ['POST'])
+@app.route('/api/reddit', methods = ['GET'])
 @cross_origin()
 def reddit():
-    return json.dumps(getImages('earthporn'))
+    return getImages('earthporn')
 
 if __name__ == '__main__':
     app.run(debug=True,host='0.0.0.0')
